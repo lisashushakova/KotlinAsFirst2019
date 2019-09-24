@@ -4,6 +4,8 @@ package lesson2.task2
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -22,7 +24,6 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  */
 fun isNumberHappy(number: Int): Boolean = (number % 10 + number / 10 % 10) == (number / 1000 + number / 100 % 10)
 
-
 /**
  * Простая
  *
@@ -30,7 +31,8 @@ fun isNumberHappy(number: Int): Boolean = (number % 10 + number / 10 % 10) == (n
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = ((x1 == x2) || (y1 == y2) || ((abs(x1 - x2).toDouble() / abs(y1 - y2) == 1.0)))
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    (x1 == x2 || y1 == y2 || abs(x2 - x1) == abs(y2 - y1))
 
 /**
  * Простая
@@ -43,7 +45,7 @@ fun daysInMonth(month: Int, year: Int): Int {
         1, 3, 5, 7, 8, 10, 12 -> 31
         4, 6, 9, 11 -> 30
         else -> {
-            return if ((year % 4 > 0) or (year % 100 == 0) and (year % 400 > 0)) 28
+            return if (year % 4 > 0 || year % 100 == 0 && year % 400 > 0) 28
             else 29
         }
     }
@@ -61,7 +63,6 @@ fun circleInside(
     x2: Double, y2: Double, r2: Double
 ): Boolean = (r2 - r1 >= sqrt(sqr(x1 - x2) + sqr(y1 - y2)))
 
-
 /**
  * Средняя
  *
@@ -71,4 +72,8 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = ((a <= r) && (b <= s) || (a <= r) && (c <= s) || (b <= r) && (a <= s) || (b <= r) && (c <= s) || (c <= r) && (a <= s) || (c <= r) && (b <= s))
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val m = min(a, min(b, c))
+    val n = a + b + c - m - max(a, max(b, c))
+    return (max(r,s) >= n && min(r,s) >= m)
+}
