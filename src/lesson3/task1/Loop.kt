@@ -12,7 +12,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -67,7 +67,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var c = 0
+    var a = n
+    do {
+        c += 1
+        a /= 10
+    } while (a > 0)
+    return c
+}
 
 /**
  * Простая
@@ -83,14 +91,29 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var a = m
+    val s = a * n
+    while (a != n) {
+        a -= if (a > n) n
+        else n
+    }
+    return s / a
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var s = 1
+    while (s <= n) {
+        s += 1
+        if (n % s == 0) break
+    }
+    return s
+}
 
 /**
  * Простая
