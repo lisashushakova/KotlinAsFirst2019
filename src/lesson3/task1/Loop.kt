@@ -74,7 +74,7 @@ fun digitNumber(n: Int): Int {
     do {
         count += 1
         a /= 10
-    } while (n != 0)
+    } while (a != 0)
     return count
 }
 
@@ -112,7 +112,7 @@ fun lcm(m: Int, n: Int): Int {
         if (a > b) a %= b
         else b %= a
     }
-    return s / (m + n)
+    return s / (a + b)
 }
 
 /**
@@ -169,7 +169,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     var x = 0
-    for (i in 1..sqrt(n.toDouble()).toInt()) {
+    for (i in 0..sqrt(n.toDouble()).toInt()) {
         if (sqr(i) in m..n) x = 1
     }
     return (x == 1)
