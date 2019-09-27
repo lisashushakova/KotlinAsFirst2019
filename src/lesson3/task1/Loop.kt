@@ -235,10 +235,9 @@ fun revert(n: Int): Int {
     var a = n
     var x = 0
     while (a != 0) {
-        x = (x + a % 10) * 10
+        x = x * 10 + a % 10
         a /= 10
     }
-    x /= 10
     return x
 }
 
