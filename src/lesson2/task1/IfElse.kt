@@ -119,7 +119,7 @@ fun whichRookThreatens(
     return when {
         a == true && b == true -> 3
         a == true -> 1
-        b == true  -> 2
+        b == true -> 2
         else -> 0
     }
 }
