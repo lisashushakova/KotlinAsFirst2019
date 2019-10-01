@@ -114,12 +114,14 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    return if (kingX == rookX1 || kingY == rookY1) {
-        if (kingX == rookX2 || kingY == rookY2) 3
-        else 1
+    val a: Boolean? = kingX == rookX1 || kingY == rookY1
+    val b: Boolean? = kingX == rookX2 || kingY == rookY2
+    return when {
+        a == true && b == true -> 3
+        a == true -> 1
+        b == true  -> 2
+        else -> 0
     }
-    else if (kingX == rookX2 || kingY == rookY2) 2
-    else 0
 }
 
 /**
@@ -137,12 +139,14 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    return if (kingX == rookX || kingY == rookY) {
-        if (abs(kingX - bishopX) == abs(kingY - bishopY)) 3
-        else 1
+    val a: Boolean? = kingX == rookX || kingY == rookY
+    val b: Boolean? = abs(kingX - bishopX) == abs(kingY - bishopY)
+    return when {
+        a == true && b == true -> 3
+        a == true -> 1
+        b == true -> 2
+        else -> 0
     }
-    else if (abs(kingX - bishopX) == abs(kingY - bishopY)) 2
-    else 0
 }
 
 /**
@@ -154,15 +158,13 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val mi = min(a, min(b, c))
-    val ma = max(a, max(b, c))
+    val mi = minOf(a, b, c)
+    val ma = maxOf(a, b, c)
     val me = a + b + c - mi - ma
     return when {
-        ma < mi + me -> when {
-            sqr(ma) == sqr(mi) + sqr(me) -> 1
-            sqr(ma) < sqr(mi) + sqr(me) -> 0
-            else -> 2
-        }
+        sqr(ma) == sqr(mi) + sqr(me) -> 1
+        sqr(ma) < sqr(mi) + sqr(me) -> 0
+        ma < mi + me -> 2
         else -> -1
     }
 }

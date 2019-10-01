@@ -105,14 +105,13 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    val s = m * n
     var a = m
     var b = n
     while (a * b != 0) {
         if (a > b) a %= b
         else b %= a
     }
-    return s / (a + b)
+    return m / (a + b) * n
 }
 
 /**
@@ -121,12 +120,10 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var s = 1
-    while (s <= n) {
-        s += 1
-        if (n % s == 0) break
+    for (i in 2..sqrt(n.toDouble()).toInt() + 1) {
+        if (n % i == 0) return i
     }
-    return s
+    return n
 }
 
 /**
@@ -134,13 +131,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var maxD = 0
-    for (i in 1 until n) {
-        if (n % i == 0) maxD = i
-    }
-    return maxD
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -149,16 +140,7 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var a = m
-    var b = n
-    while (a * b != 0) {
-        if (a >= b) a %= b
-        else b %= a
-    }
-    a += b
-    return (a == 1)
-}
+fun isCoPrime(m: Int, n: Int): Boolean = m * n == lcm(m, n)
 
 /**
  * Простая
@@ -168,11 +150,11 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var x = 0
+    var x = false
     for (i in 0..sqrt(n.toDouble()).toInt()) {
-        if (sqr(i) in m..n) x = 1
+        if (sqr(i) in m..n) x = true
     }
-    return (x == 1)
+    return (x)
 }
 
 /**
@@ -264,14 +246,14 @@ fun hasDifferentDigits(n: Int): Boolean {
     var x = n
     var a: Int
     var b: Int
-    var count = 0
+    var c = false
     while (x >= 10) {
         a = x % 10
         b = x / 10 % 10
         x /= 10
-        if (a != b) count += 1
+        if (a != b) c = true
     }
-    return (count > 0)
+    return (c)
 }
 
 /**
@@ -283,7 +265,31 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var numeral = 0
+    var sum = 0
+    var i = 0
+    var square = 0
+    var c = 1
+    var l = 10
+    while (sum < n) {
+        i += 1
+        square = i * i
+        while (square / l != 0) {
+            l *= 10
+            c += 1
+        }
+        sum += c
+    }
+    sum -= c
+    l /= 10
+    while (sum != n) {
+        numeral = square / l % 10
+        l /= 10
+        sum += 1
+    }
+    return numeral
+}
 
 /**
  * Сложная
@@ -294,4 +300,28 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var numeral = 0
+    var sum = 0
+    var i = 0
+    var fib = 0
+    var c = 1
+    var l = 10
+    while (sum < n) {
+        i += 1
+        fib = fib(i)
+        while (fib / l != 0) {
+            l *= 10
+            c += 1
+        }
+        sum += c
+    }
+    sum -= c
+    l /= 10
+    while (sum != n) {
+        numeral = fib / l % 10
+        l /= 10
+        sum += 1
+    }
+    return numeral
+}
