@@ -114,12 +114,12 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    val a: Boolean? = kingX == rookX1 || kingY == rookY1
-    val b: Boolean? = kingX == rookX2 || kingY == rookY2
+    val threat1 = kingX == rookX1 || kingY == rookY1
+    val threat2 = kingX == rookX2 || kingY == rookY2
     return when {
-        a == true && b == true -> 3
-        a == true -> 1
-        b == true -> 2
+        threat1 && threat2  -> 3
+        threat1 -> 1
+        threat2 -> 2
         else -> 0
     }
 }
@@ -139,12 +139,12 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    val a: Boolean? = kingX == rookX || kingY == rookY
-    val b: Boolean? = abs(kingX - bishopX) == abs(kingY - bishopY)
+    val threatRook = kingX == rookX || kingY == rookY
+    val threatBishop = abs(kingX - bishopX) == abs(kingY - bishopY)
     return when {
-        a == true && b == true -> 3
-        a == true -> 1
-        b == true -> 2
+        threatRook && threatBishop -> 3
+        threatRook -> 1
+        threatBishop -> 2
         else -> 0
     }
 }
@@ -161,12 +161,14 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val mi = minOf(a, b, c)
     val ma = maxOf(a, b, c)
     val me = a + b + c - mi - ma
-    return when {
-        sqr(ma) == sqr(mi) + sqr(me) -> 1
-        sqr(ma) < sqr(mi) + sqr(me) -> 0
-        ma < mi + me -> 2
-        else -> -1
+    return if (mi + me > ma) {
+        when {
+            sqr(ma) == sqr(mi) + sqr(me) -> 1
+            sqr(ma) < sqr(mi) + sqr(me) -> 0
+            else -> 2
+        }
     }
+    else -1
 }
 
 /**
