@@ -197,16 +197,10 @@ fun collatzSteps(x: Int): Int {
  */
 fun sin(x: Double, eps: Double): Double {
     var sin = 0.0
-    var x1 = x
+    val x1 = x % (2.0 * PI)
     var i = 1
     var k = 1
     var member: Double
-    while (x1 >= 2.0 * PI) {
-        x1 -= 2.0 * PI
-    }
-    while (x1 <= -2.0 * PI) {
-        x1 += 2.0 * PI
-    }
     do {
         member = x1.pow(i) / factorial(i)
         sin += k * member
@@ -227,16 +221,10 @@ fun sin(x: Double, eps: Double): Double {
  */
 fun cos(x: Double, eps: Double): Double {
     var cos = 1.0
-    var x1 = x
+    val x1 = x % (2.0 * PI)
     var i = 2
     var k = -1
     var member: Double
-    while (x1 >= 2.0 * PI) {
-        x1 -= 2.0 * PI
-    }
-    while (x1 <= -2.0 * PI) {
-        x1 += 2.0 * PI
-    }
     do {
         member = x1.pow(i) / factorial(i)
         cos += k * member

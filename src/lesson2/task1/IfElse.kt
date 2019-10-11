@@ -161,14 +161,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val mi = minOf(a, b, c)
     val ma = maxOf(a, b, c)
     val me = a + b + c - mi - ma
-    return if (mi + me > ma) {
-        when {
+        return when {
+            mi + me < ma -> -1
             sqr(ma) == sqr(mi) + sqr(me) -> 1
             sqr(ma) < sqr(mi) + sqr(me) -> 0
             else -> 2
         }
-    }
-    else -1
 }
 
 /**
