@@ -133,10 +133,12 @@ fun abs(v: List<Double>): Double {
  */
 fun mean(list: List<Double>): Double {
     var result = 0.0
-    for (element in list) {
-        result += element
+    return if (list.isNotEmpty()){
+        for (element in list) {
+            result += element
+        }
+        result / list.size
     }
-    return if (result > 0.0) result / list.size
     else result
 }
 
@@ -259,9 +261,12 @@ fun factorizeToString(n: Int): String {
 fun convert(n: Int, base: Int): List<Int> {
     var x = n
     val result = mutableListOf<Int>()
-    while (x > 0) {
-        result.add(x % base)
-        x /= base
+    if (n == 0) result.add(0)
+    else {
+        while (x > 0) {
+            result.add(x % base)
+            x /= base
+        }
     }
     return result.reversed()
 }
