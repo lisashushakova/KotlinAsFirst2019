@@ -133,7 +133,7 @@ fun abs(v: List<Double>): Double {
  */
 fun mean(list: List<Double>): Double {
     var result = 0.0
-    return if (list.isNotEmpty()){
+    return if (list.isNotEmpty()) {
         for (element in list) {
             result += element
         }
