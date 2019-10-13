@@ -320,7 +320,8 @@ fun convertToString(n: Int, base: Int): String {
         result += lat(x % base)
         x /= base
     }
-    return result.reversed()
+    return if (n > 0) result.reversed()
+    else "0"
 }
 
 /**
