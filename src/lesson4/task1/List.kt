@@ -283,7 +283,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    fun lat (n: Int): String {
+    fun lat(n: Int): String {
         return when (n) {
             10 -> "a"
             11 -> "b"
