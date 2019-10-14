@@ -276,33 +276,33 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     fun lat(n: Int): String = when (n) {
-            10 -> "a"
-            11 -> "b"
-            12 -> "c"
-            13 -> "d"
-            14 -> "e"
-            15 -> "f"
-            16 -> "g"
-            17 -> "h"
-            18 -> "i"
-            19 -> "j"
-            20 -> "k"
-            21 -> "l"
-            22 -> "m"
-            23 -> "n"
-            24 -> "o"
-            25 -> "p"
-            26 -> "q"
-            27 -> "r"
-            28 -> "s"
-            29 -> "t"
-            30 -> "u"
-            31 -> "v"
-            32 -> "w"
-            33 -> "x"
-            34 -> "y"
-            35 -> "z"
-            else -> "$n"
+        10 -> "a"
+        11 -> "b"
+        12 -> "c"
+        13 -> "d"
+        14 -> "e"
+        15 -> "f"
+        16 -> "g"
+        17 -> "h"
+        18 -> "i"
+        19 -> "j"
+        20 -> "k"
+        21 -> "l"
+        22 -> "m"
+        23 -> "n"
+        24 -> "o"
+        25 -> "p"
+        26 -> "q"
+        27 -> "r"
+        28 -> "s"
+        29 -> "t"
+        30 -> "u"
+        31 -> "v"
+        32 -> "w"
+        33 -> "x"
+        34 -> "y"
+        35 -> "z"
+        else -> "$n"
     }
     var x = n
     var result = String()
@@ -337,33 +337,33 @@ fun decimal(digits: List<Int>, base: Int): Int = polynom(digits.reversed(), base
  */
 fun decimalFromString(str: String, base: Int): Int {
     fun num(str: String): Int = when (str) {
-            "a" -> 10
-            "b" -> 11
-            "c" -> 12
-            "d" -> 13
-            "e" -> 14
-            "f" -> 15
-            "g" -> 16
-            "h" -> 17
-            "i" -> 18
-            "j" -> 19
-            "k" -> 20
-            "l" -> 21
-            "m" -> 22
-            "n" -> 23
-            "o" -> 24
-            "p" -> 25
-            "q" -> 26
-            "r" -> 27
-            "s" -> 28
-            "t" -> 29
-            "u" -> 30
-            "v" -> 31
-            "w" -> 32
-            "x" -> 33
-            "y" -> 34
-            "z" -> 35
-            else -> str.toInt()
+        "a" -> 10
+        "b" -> 11
+        "c" -> 12
+        "d" -> 13
+        "e" -> 14
+        "f" -> 15
+        "g" -> 16
+        "h" -> 17
+        "i" -> 18
+        "j" -> 19
+        "k" -> 20
+        "l" -> 21
+        "m" -> 22
+        "n" -> 23
+        "o" -> 24
+        "p" -> 25
+        "q" -> 26
+        "r" -> 27
+        "s" -> 28
+        "t" -> 29
+        "u" -> 30
+        "v" -> 31
+        "w" -> 32
+        "x" -> 33
+        "y" -> 34
+        "z" -> 35
+        else -> str.toInt()
     }
     var result = 0
     for ((index, element) in str.reversed().withIndex()) {
@@ -405,4 +405,108 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val result = mutableListOf<String>()
+    if (n / 1000 != 0) {
+        when (n / 1000 / 100) {
+            1 -> result.add("сто")
+            2 -> result.add("двести")
+            3 -> result.add("триста")
+            4 -> result.add("четыреста")
+            5 -> result.add("пятьсот")
+            6 -> result.add("шестьсот")
+            7 -> result.add("семьсот")
+            8 -> result.add("восемьсот")
+            9 -> result.add("девятьсот")
+        }
+        if (n / 1000 % 100 in 11..19) {
+            when (n / 1000 % 100) {
+                11 -> result.add("одиннадцать тысяч")
+                12 -> result.add("двенадцать тысяч")
+                13 -> result.add("тринадцать тысяч")
+                14 -> result.add("четырнадцать тысяч")
+                15 -> result.add("пятнадцать тысяч")
+                16 -> result.add("шестнадцать тысяч")
+                17 -> result.add("семнадцать тысяч")
+                18 -> result.add("восемнадцать тысяч")
+                19 -> result.add("девятнадцать тысяч")
+            }
+        }
+        else {
+            when (n / 1000 / 10 % 10) {
+                1 -> result.add("десять")
+                2 -> result.add("двадцать")
+                3 -> result.add("тридцать")
+                4 -> result.add("сорок")
+                5 -> result.add("пятьдесят")
+                6 -> result.add("шестьдесят")
+                7 -> result.add("семьдесят")
+                8 -> result.add("восемьдесят")
+                9 -> result.add("девяносто")
+            }
+            when (n / 1000 % 10) {
+                0 -> result.add("тысяч")
+                1 -> result.add("одна тысяча")
+                2 -> result.add("две тысячи")
+                3 -> result.add("три тысячи")
+                4 -> result.add("четыре тысячи")
+                5 -> result.add("пять тысяч")
+                6 -> result.add("шесть тысяч")
+                7 -> result.add("семь тысяч")
+                8 -> result.add("восемь тысяч")
+                9 -> result.add("девять тысяч")
+            }
+        }
+    }
+    if (n % 1000 != 0) {
+        when (n % 1000 / 100) {
+            1 -> result.add("сто")
+            2 -> result.add("двести")
+            3 -> result.add("триста")
+            4 -> result.add("четыреста")
+            5 -> result.add("пятьсот")
+            6 -> result.add("шестьсот")
+            7 -> result.add("семьсот")
+            8 -> result.add("восемьсот")
+            9 -> result.add("девятьсот")
+        }
+        if (n % 1000 % 100 in 11..19) {
+            when (n % 1000 % 100) {
+                11 -> result.add("одиннадцать")
+                12 -> result.add("двенадцать")
+                13 -> result.add("тринадцать")
+                14 -> result.add("четырнадцать")
+                15 -> result.add("пятнадцать")
+                16 -> result.add("шестнадцать")
+                17 -> result.add("семнадцать")
+                18 -> result.add("восемнадцать")
+                19 -> result.add("девятнадцать")
+            }
+        }
+        else {
+            when (n % 1000 / 10 % 10) {
+                1 -> result.add("десять")
+                2 -> result.add("двадцать")
+                3 -> result.add("тридцать")
+                4 -> result.add("сорок")
+                5 -> result.add("пятьдесят")
+                6 -> result.add("шестьдесят")
+                7 -> result.add("семьдесят")
+                8 -> result.add("восемьдесят")
+                9 -> result.add("девяносто")
+            }
+            when (n % 1000 % 10) {
+                1 -> result.add("один")
+                2 -> result.add("два")
+                3 -> result.add("три")
+                4 -> result.add("четыре")
+                5 -> result.add("пять")
+                6 -> result.add("шесть")
+                7 -> result.add("семь")
+                8 -> result.add("восемь")
+                9 -> result.add("девять")
+            }
+        }
+    }
+    return result.joinToString(" ")
+}
