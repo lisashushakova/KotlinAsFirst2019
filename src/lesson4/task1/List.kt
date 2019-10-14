@@ -241,15 +241,7 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String {
-    var x = n
-    var result = String()
-    while (x > 1) {
-        result += "${minDivisor(x)}*"
-        x /= minDivisor(x)
-    }
-    return result.substring(0, result.length - 1)
-}
+fun factorizeToString(n: Int): String = factorize(n).joinToString("*")
 
 /**
  * Средняя
@@ -283,8 +275,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    fun lat(n: Int): String {
-        return when (n) {
+    fun lat(n: Int): String = when (n) {
             10 -> "a"
             11 -> "b"
             12 -> "c"
@@ -312,7 +303,6 @@ fun convertToString(n: Int, base: Int): String {
             34 -> "y"
             35 -> "z"
             else -> "$n"
-        }
     }
     var x = n
     var result = String()
@@ -331,13 +321,7 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int {
-    var result = 0
-    for ((index, element) in digits.reversed().withIndex()) {
-        result += element * (base.toDouble().pow(index)).toInt()
-    }
-    return result
-}
+fun decimal(digits: List<Int>, base: Int): Int = polynom(digits.reversed(), base)
 
 /**
  * Сложная
@@ -352,8 +336,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    fun num(str: String): Int {
-        return when (str) {
+    fun num(str: String): Int = when (str) {
             "a" -> 10
             "b" -> 11
             "c" -> 12
@@ -381,7 +364,6 @@ fun decimalFromString(str: String, base: Int): Int {
             "y" -> 34
             "z" -> 35
             else -> str.toInt()
-        }
     }
     var result = 0
     for ((index, element) in str.reversed().withIndex()) {
