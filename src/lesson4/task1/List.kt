@@ -416,5 +416,5 @@ fun russian(n: Int): String {
             }
         }
     }
-    return result.joinToString("")
+    return result.joinToString(" ")
 }
