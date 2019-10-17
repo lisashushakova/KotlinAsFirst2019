@@ -409,11 +409,13 @@ fun russian(n: Int): String {
             }
         }
         if (thousand == 1) {
-            when (x % 100 % 10) {
-                1 -> result.add("тысяча")
-                2, 3, 4 -> result.add("тысячи")
-                else -> result.add("тысяч")
-            }
+            if (x % 100 / 10 != 1)
+                when (x % 100 % 10) {
+                    1 -> result.add("тысяча")
+                    2, 3, 4 -> result.add("тысячи")
+                    else -> result.add("тысяч")
+                }
+            else result.add("тысяч")
         }
     }
     return result.joinToString(" ")
