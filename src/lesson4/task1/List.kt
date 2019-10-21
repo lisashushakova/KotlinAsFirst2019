@@ -5,7 +5,6 @@ package lesson4.task1
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import kotlin.math.sqrt
-import kotlin.math.pow
 
 /**
  * Пример
@@ -180,8 +179,10 @@ fun times(a: List<Int>, b: List<Int>): Int {
  */
 fun polynom(p: List<Int>, x: Int): Int {
     var result = 0
+    var pow = 1
     for (i in p.indices) {
-        result += p[i] * x.toDouble().pow(i).toInt()
+        result += p[i] * pow
+        pow *= x
     }
     return result
 }
@@ -246,13 +247,10 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString("*")
 fun convert(n: Int, base: Int): List<Int> {
     var x = n
     val result = mutableListOf<Int>()
-    if (n == 0) result.add(0)
-    else {
-        while (x > 0) {
-            result.add(x % base)
-            x /= base
-        }
-    }
+    do {
+        result.add(x % base)
+        x /= base
+    } while (x > 0)
     return result.reversed()
 }
 
@@ -268,13 +266,13 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    val result = mutableListOf<String>()
+    val result = StringBuilder()
     val convert = convert(n, base)
     for (i in convert) {
-        if (i < 10) result.add(i.toString())
-        else result.add(('a'.toInt() - 10 + i).toChar().toString())
+        if (i < 10) result.append(i)
+        else result.append('a'- 10 + i)
     }
-    return result.joinToString("")
+    return result.toString()
 }
 
 /**
