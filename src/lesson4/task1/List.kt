@@ -270,7 +270,7 @@ fun convertToString(n: Int, base: Int): String {
     val convert = convert(n, base)
     for (i in convert) {
         if (i < 10) result.append(i)
-        else result.append('a' - 10 + i)
+        else result.append('a'- 10 + i)
     }
     return result.toString()
 }
