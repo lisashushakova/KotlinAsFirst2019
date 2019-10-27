@@ -187,7 +187,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
             result += key to value
             average += key to 1
         }
-        if (value != result[key]) {
+        else if (value != result[key]) {
             result[key] = result[key]!! + value
             average[key] = average[key]!! + 1
         }
