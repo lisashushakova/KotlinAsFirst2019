@@ -186,8 +186,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
         if (key !in result) {
             result += key to value
             average += key to 1
-        }
-        else if (value != result[key]) {
+        } else if (value != result[key]) {
             result[key] = result[key]!! + value
             average[key] = average[key]!! + 1
         }
@@ -232,7 +231,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    for (letter in word) if (letter !in chars) return false
+    for (letter in word) if (letter !in chars && letter.toUpperCase() !in chars) return false
     return true
 }
 
