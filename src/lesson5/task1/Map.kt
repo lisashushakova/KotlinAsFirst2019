@@ -183,10 +183,10 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     val result = mutableMapOf<String, Double>()
     val average = mutableMapOf<String, Int>()
     for ((key, value) in stockPrices) {
-        if (key !in result) {
+        if (result[key] == null) {
             result += key to value
             average += key to 1
-        } else if (value != result[key]) {
+        } else {
             result[key] = result[key]!! + value
             average[key] = average[key]!! + 1
         }
@@ -231,7 +231,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    for (letter in word) if (letter.toLowerCase() !in chars && letter.toUpperCase() !in chars) return false
+    for (letter in word.toLowerCase()) if (letter.toLowerCase() !in chars) return false
     return true
 }
 
@@ -266,7 +266,11 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    for (i in words.indices) for (j in i + 1 until words.size)
+        if (words[i].toSet() == words[j].toSet()) return true
+    return false
+}
 
 /**
  * Сложная
