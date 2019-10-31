@@ -266,13 +266,10 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    val result = StringBuilder()
+    var result = ""
     val convert = convert(n, base)
-    for (i in convert) {
-        if (i < 10) result.append(i)
-        else result.append('a' - 10 + i)
-    }
-    return result.toString()
+    for (i in convert) result += if (i < 10) i else 'a' - 10 + i
+    return result
 }
 
 /**
