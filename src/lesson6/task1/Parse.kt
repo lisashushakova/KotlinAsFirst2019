@@ -105,7 +105,29 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    if (parts.size != 3) return ""
+    val day = parts[0].toIntOrNull() ?: return ""
+    val year = parts[2].toIntOrNull() ?: return ""
+    val month = when (parts[1].toInt()) {
+        1 -> "января"
+        2 -> "февраля"
+        3 -> "марта"
+        4 -> "апреля"
+        5 -> "мая"
+        6 -> "июня"
+        7 -> "июля"
+        8 -> "августа"
+        9 -> "сентября"
+        10 -> "октября"
+        11 -> "ноября"
+        12 -> "декабря"
+        else -> null
+    } ?: return ""
+    if ((day < 1) || (year < 0) || (day > daysInMonth(parts[1].toInt(), year))) return ""
+    return "$day $month $year"
+}
 
 /**
  * Средняя
@@ -133,7 +155,16 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val parts = jumps.split(" ").filter { it != "-" && it != "%" }
+    if (parts.isEmpty()) return -1
+    var result = parts[0].toIntOrNull() ?: return -1
+    for (i in parts) {
+        val x = i.toIntOrNull() ?: return -1
+        if (x > result) result = x
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -146,7 +177,15 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val parts = jumps.split(" ")
+    if (parts.size % 2 > 0) return -1
+    var result = -1
+    for (i in parts.indices step 2) {
+        if (parts[i].toInt() > result && '+' in parts[i + 1]) result = parts[i].toInt()
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -157,7 +196,16 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (expression.matches(Regex("""(\d+ [+-] )*\d+"""))) {
+        val parts = expression.split(' ')
+        var result = parts[0].toInt()
+        for (i in 2 until parts.size step 2)
+            if (parts[i - 1] == "+") result += parts[i].toInt()
+            else result -= parts[i].toInt()
+        return result
+    } else throw IllegalArgumentException()
+}
 
 /**
  * Сложная

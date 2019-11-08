@@ -265,12 +265,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String {
-    var result = ""
-    val convert = convert(n, base)
-    for (i in convert) result += if (i < 10) i else 'a' - 10 + i
-    return result
-}
+fun convertToString(n: Int, base: Int): String = TODO()
 
 /**
  * Средняя
