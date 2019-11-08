@@ -91,7 +91,7 @@ fun dateStrToDigit(str: String): String {
         "декабря" -> 12
         else -> null
     } ?: return ""
-    if ((day < 1) || (year < 0) || (day > daysInMonth(month, year))) return ""
+    if (day < 1 || year < 0 || day > daysInMonth(month, year)) return ""
     return "${twoDigitStr(day)}.${twoDigitStr(month)}.$year"
 }
 
@@ -125,7 +125,7 @@ fun dateDigitToStr(digital: String): String {
         12 -> "декабря"
         else -> null
     } ?: return ""
-    if ((day < 1) || (year < 0) || (day > daysInMonth(parts[1].toInt(), year))) return ""
+    if (day < 1 || year < 0 || day > daysInMonth(parts[1].toInt(), year)) return ""
     return "$day $month $year"
 }
 
