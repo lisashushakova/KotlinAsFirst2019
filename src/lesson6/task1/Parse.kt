@@ -181,9 +181,7 @@ fun bestHighJump(jumps: String): Int {
     val parts = jumps.split(" ")
     if (parts.size % 2 > 0) return -1
     var result = -1
-    for (i in parts.indices step 2) {
-        if (parts[i].toInt() > result && '+' in parts[i + 1]) result = parts[i].toInt()
-    }
+    for (i in parts.indices step 2) if (parts[i].toInt() > result && '+' in parts[i + 1]) result = parts[i].toInt()
     return result
 }
 

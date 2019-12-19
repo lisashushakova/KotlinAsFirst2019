@@ -230,10 +230,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    for (letter in word) if (letter.toLowerCase() !in chars && letter.toUpperCase() !in chars) return false
-    return true
-}
+fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
 
 /**
  * Средняя
@@ -266,11 +263,7 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean {
-    for (i in words.indices)
-        for (j in i + 1 until words.size) if (words[i].toSet() == words[j].toSet()) return true
-    return false
-}
+fun hasAnagrams(words: List<String>): Boolean = TODO()
 
 /**
  * Сложная
