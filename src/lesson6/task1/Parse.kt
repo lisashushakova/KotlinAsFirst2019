@@ -156,6 +156,7 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
+    if (Regex("""[^\d-%\s]""").find(jumps)?.value != null) return -1
     val parts = jumps.split(" ").filter { it != "-" && it != "%" }
     if (parts.isEmpty()) return -1
     var result = parts[0].toIntOrNull() ?: return -1
@@ -178,6 +179,7 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
+    if (Regex("""[^\d-+%\s]""").find(jumps)?.value != null) return -1
     val parts = jumps.split(" ")
     if (parts.size % 2 > 0) return -1
     var result = -1
@@ -195,14 +197,13 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression.matches(Regex("""(\d+ [+-] )*\d+"""))) {
-        val parts = expression.split(" ")
-        var result = parts[0].toInt()
-        for (i in 2 until parts.size step 2)
-            if (parts[i - 1] == "+") result += parts[i].toInt()
-            else result -= parts[i].toInt()
-        return result
-    } else throw IllegalArgumentException()
+    require(expression.matches(Regex("""(\d+ [+-] )*\d+""")))
+    val parts = expression.split(" ")
+    var result = parts[0].toInt()
+    for (i in 2 until parts.size step 2)
+        if (parts[i - 1] == "+") result += parts[i].toInt()
+        else result -= parts[i].toInt()
+    return result
 }
 
 /**

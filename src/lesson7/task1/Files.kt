@@ -53,8 +53,17 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
-
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val result = mutableMapOf<String, Int>()
+    val file = File(inputName).readLines().toString().toLowerCase()
+    for (i in substrings.indices) {
+        var count = 0
+        val word = substrings[i].toLowerCase()
+        for (j in file.windowed(size = word.length)) if (j == word) count++
+        result[substrings[i]] = count
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -70,7 +79,24 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val file = File(outputName).bufferedWriter()
+    var elem0 = ' '
+    for (elem in File(inputName).readText()) {
+        if (elem0 in "жЖчЧшШщЩ" && elem in "ыЫяЯюЮ") {
+            file.write( when (elem) {
+                    'ы' -> "и"
+                    'я' -> "а"
+                    'ю' -> "у"
+                    'Ы' -> "И"
+                    'Я' -> "А"
+                    'Ю' -> "У"
+                    else -> ""
+                }
+            )
+        } else file.write(elem.toString())
+        elem0 = elem
+    }
+    file.close()
 }
 
 /**
