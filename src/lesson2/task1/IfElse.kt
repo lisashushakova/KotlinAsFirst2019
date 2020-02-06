@@ -112,12 +112,12 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    val threat1 = kingX == rookX1 || kingY == rookY1
-    val threat2 = kingX == rookX2 || kingY == rookY2
+    val r1 = kingX == rookX1 || kingY == rookY1
+    val r2 = kingX == rookX2 || kingY == rookY2
     return when {
-        threat1 && threat2 -> 3
-        threat1 -> 1
-        threat2 -> 2
+        r1 && r2 -> 3
+        r1 -> 1
+        r2 -> 2
         else -> 0
     }
 }
@@ -137,12 +137,12 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    val threatRook = kingX == rookX || kingY == rookY
-    val threatBishop = abs(kingX - bishopX) == abs(kingY - bishopY)
+    val r1 = kingX == rookX || kingY == rookY
+    val r2 = abs(kingX - bishopX) == abs(kingY - bishopY)
     return when {
-        threatRook && threatBishop -> 3
-        threatRook -> 1
-        threatBishop -> 2
+        r1 && r2 -> 3
+        r1 -> 1
+        r2 -> 2
         else -> 0
     }
 }
@@ -156,13 +156,13 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val mi = minOf(a, b, c)
-    val ma = maxOf(a, b, c)
-    val me = a + b + c - mi - ma
+    val min = minOf(a, b, c)
+    val max = maxOf(a, b, c)
+    val aver = a + b + c - min - max
     return when {
-        mi + me < ma -> -1
-        sqr(ma) == sqr(mi) + sqr(me) -> 1
-        sqr(ma) < sqr(mi) + sqr(me) -> 0
+        min + aver < max -> -1
+        sqr(min) + sqr(aver) == sqr(max) -> 1
+        sqr(min) + sqr(aver) > sqr(max) -> 0
         else -> 2
     }
 }
@@ -176,8 +176,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    val m = min(b, d)
-    val n = max(a, c)
-    return if (m - n >= 0) m - n
-    else -1
+    val min = min(b, d)
+    val max = max(a, c)
+    return if (min < max) -1
+    else min - max
 }

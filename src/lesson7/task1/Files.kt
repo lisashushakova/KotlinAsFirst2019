@@ -117,7 +117,15 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val file = File(outputName).bufferedWriter()
+    val text = mutableListOf<String>()
+    var max = 0
+    for (line in File(inputName).readLines()) {
+        text.add(line.trim())
+        if (line.trim().length > max) max = line.length
+    }
+    for (line in text) file.write(" ".repeat((max - line.length) / 2) + line + '\n')
+    file.close()
 }
 
 /**
@@ -148,7 +156,32 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val file = File(outputName).bufferedWriter()
+    val text = mutableListOf<String>()
+    var max = 0
+    for (line in File(inputName).readLines()) {
+        val newLine = line.trim().split(" +".toRegex()).filter { it != "" }.joinToString(" ")
+        text.add(newLine)
+        if (newLine.length > max) max = newLine.length
+    }
+    for (line in text) {
+        val words = line.split(" ")
+        file.write(words[0])
+        if (words.size != 1) {
+            val spaceLength = (max - line.length) / (words.size - 1) + 1
+            var bSpaceCounter = ((max - line.length + words.size - 1) % (words.size - 1))
+            for (word in words.subList(1, words.lastIndex + 1)) {
+                if (bSpaceCounter > 0) {
+                    file.write(" ".repeat(spaceLength + 1) + word)
+                    bSpaceCounter--
+                } else {
+                    file.write(" ".repeat(spaceLength) + word)
+                }
+            }
+        }
+        file.write("\n")
+    }
+    file.close()
 }
 
 /**
@@ -169,7 +202,17 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    val result = mutableMapOf<String, Int>()
+    for (line in File(inputName).readLines()) {
+        for (word in Regex("""[^a-zA-Zа-яА-ЯёЁ]""").split(line).filter { it != "" }) {
+            result[word.toLowerCase()] = result.getOrPut(word.toLowerCase(), { 0 }) + 1
+        }
+    }
+    val newResult = result.toList().sortedBy { (_, value) -> value }.reversed()
+    return if (newResult.size < 20) newResult.toMap()
+    else newResult.subList(0, 20).toMap()
+}
 
 /**
  * Средняя
@@ -207,7 +250,23 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    for (char in File(inputName).readText()) {
+        var keyExists = false
+        var rKey = ' '
+        for (key in dictionary.keys) {
+            if (key.toLowerCase() == char.toLowerCase()) {
+                rKey = key
+                keyExists = true
+                break
+            }
+        }
+        if (keyExists) {
+            if (char.isUpperCase()) outputStream.write((dictionary[rKey] ?: error("")).toLowerCase().capitalize())
+            else outputStream.write((dictionary[rKey] ?: error("")).toLowerCase())
+        } else outputStream.write(char.toString())
+    }
+    outputStream.close()
 }
 
 /**
@@ -235,7 +294,31 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val result = mutableListOf<String>()
+    var mxLength = 0
+    for (line in File(inputName).readLines()) {
+        val word = line.filter { it != '\n' }
+        val wordChars = mutableSetOf<Char>()
+        var hasDiffChars = true
+        for (char in word.toLowerCase()) {
+            if (wordChars.contains(char)) {
+                hasDiffChars = false
+                break
+            } else {
+                wordChars.add(char)
+            }
+        }
+        if (hasDiffChars && word.length >= mxLength) {
+            if (word.length > mxLength) {
+                result.clear()
+                mxLength = word.length
+            }
+            result.add(word)
+        }
+    }
+    outputStream.write(result.joinToString(", "))
+    outputStream.close()
 }
 
 /**
@@ -455,4 +538,3 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
-

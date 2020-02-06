@@ -58,6 +58,29 @@ Basic, Ruby, Swift.
     }
 
     @Test
+    fun test() {
+        foo("input/inputhtml", "temp.txt")
+        assertFileContent(
+            "temp.txt",
+            """
+<html>
+    <body>
+        <p>
+            <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+            <h2>Vestibulum lobortis. Est vehicula rutrum suscipit, ipsum libero placerat tortor.</h2>
+        </p>
+        <p>
+            <h3>Suspendisse et elit in enim tempus iaculis.</h3>
+        </p>
+    </body>
+</html>
+                    """.trimIndent().replace(Regex("\\s\\s+"), " ").replace(Regex("[\\t]"), "")
+        )
+        File("temp.txt").delete()
+    }
+
+
+    @Test
     @Tag("Normal")
     fun countSubstrings() {
         assertEquals(
