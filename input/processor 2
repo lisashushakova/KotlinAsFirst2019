@@ -1,5 +1,0 @@
-ADD 1
-IF R0 == 1 GOTO 3 ELSE 4
-ADD 4
-SUB 1
-ADD 2
