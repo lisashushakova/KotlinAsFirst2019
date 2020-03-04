@@ -14,6 +14,8 @@ import lesson1.task1.sqr
  * Аргументы конструктора -- вещественная и мнимая часть числа.
  */
 
+fun regex(str: String, i: Int): Double = Regex("""-?\d+\.?\d*""").findAll(str).elementAt(i).value.toDouble()
+
 class Complex(val re: Double, val im: Double) {
 
     /**
@@ -24,10 +26,7 @@ class Complex(val re: Double, val im: Double) {
     /**
      * Конструктор из строки вида x+yi
      */
-    constructor(s: String) : this(
-        Regex("""-?\d+\.?\d*""").findAll(s).elementAt(0).value.toDouble(),
-        Regex("""-?\d+\.?\d*""").findAll(s).elementAt(1).value.toDouble()
-    )
+    constructor(s: String) : this(regex(s, 0), regex(s, 1))
 
     /**
      * Сложение.
