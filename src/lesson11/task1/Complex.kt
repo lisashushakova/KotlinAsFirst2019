@@ -13,7 +13,6 @@ import lesson1.task1.sqr
  *
  * Аргументы конструктора -- вещественная и мнимая часть числа.
  */
-val regex = Regex("""-?\d+\.?\d*""")
 
 class Complex(val re: Double, val im: Double) {
 
@@ -26,10 +25,9 @@ class Complex(val re: Double, val im: Double) {
      * Конструктор из строки вида x+yi
      */
     constructor(s: String) : this(
-        regex.findAll(s).elementAt(0).value.toDouble(),
-        regex.findAll(s).elementAt(1).value.toDouble()
+        Regex("""-?\d+\.?\d*""").findAll(s).elementAt(0).value.toDouble(),
+        Regex("""-?\d+\.?\d*""").findAll(s).elementAt(1).value.toDouble()
     )
-
 
     /**
      * Сложение.
@@ -55,9 +53,10 @@ class Complex(val re: Double, val im: Double) {
     /**
      * Деление
      */
-    operator fun div(other: Complex): Complex =
-        Complex((re * other.re + im * other.im) / (sqr(other.re) + sqr(other.im)),
-            (im * other.re - re * other.im) / (sqr(other.re) + sqr(other.im)))
+    operator fun div(other: Complex): Complex = Complex(
+        (re * other.re + im * other.im) / (sqr(other.re) + sqr(other.im)),
+        (im * other.re - re * other.im) / (sqr(other.re) + sqr(other.im))
+    )
 
     /**
      * Сравнение на равенство

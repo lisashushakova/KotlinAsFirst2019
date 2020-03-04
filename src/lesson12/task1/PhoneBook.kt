@@ -41,13 +41,7 @@ class PhoneBook {
      * и false, если человек с таким именем отсутствовал в телефонной книге
      * (во втором случае телефонная книга не должна меняться).
      */
-    fun removeHuman(name: String): Boolean {
-        return if (phoneBook[name] == null) false
-        else {
-            phoneBook.remove(name)
-            return true
-        }
-    }
+    fun removeHuman(name: String): Boolean = phoneBook.remove(name) != null
 
     /**
      * Добавить номер телефона.
@@ -57,10 +51,10 @@ class PhoneBook {
      * либо такой номер телефона зарегистрирован за другим человеком.
      */
     fun addPhone(name: String, phone: String): Boolean {
-        for (i in phoneBook.values) {
-            if (phone in i) return false
-        }
-        return if (name !in phoneBook.keys) false
+        //for (i in phoneBook.values) {
+            //if (phone in i) return false
+        //}
+        return if (name !in phoneBook.keys || !phoneBook.values.find { it.contains(phone) }.isNullOrEmpty()) false
         else {
             phoneBook[name]!!.add(phone)
             true
@@ -74,9 +68,9 @@ class PhoneBook {
      * либо у него не было такого номера телефона.
      */
     fun removePhone(name: String, phone: String): Boolean {
-        return if (name !in phoneBook.keys || phone !in phoneBook[name]!!) false
+        return if (name !in phoneBook.keys || phone !in phoneBook.getValue(name)) false
         else {
-            phoneBook[name]!!.remove(phone)
+            phoneBook.getValue(name).remove(phone)
             true
         }
     }
@@ -87,7 +81,7 @@ class PhoneBook {
      */
     fun phones(name: String): Set<String> {
         return if (name !in phoneBook.keys) setOf()
-        else phoneBook[name]!!
+        else phoneBook.getValue(name)
     }
 
     /**
@@ -106,7 +100,5 @@ class PhoneBook {
      */
     override fun equals(other: Any?): Boolean = other is PhoneBook && this.hashCode() == other.hashCode()
 
-    override fun hashCode(): Int {
-        return phoneBook.hashCode()
-    }
+    override fun hashCode(): Int = phoneBook.hashCode()
 }
