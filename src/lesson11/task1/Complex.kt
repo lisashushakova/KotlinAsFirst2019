@@ -14,7 +14,7 @@ import lesson1.task1.sqr
  * Аргументы конструктора -- вещественная и мнимая часть числа.
  */
 
-fun regex(str: String, i: Int): Double = Regex("""-?\d+\.?\d*""").findAll(str).elementAt(i).value.toDouble()
+private fun regex(str: String, i: Int): Double = Regex("""-?\d+\.?\d*""").findAll(str).elementAt(i).value.toDouble()
 
 class Complex(val re: Double, val im: Double) {
 
